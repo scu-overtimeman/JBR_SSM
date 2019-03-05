@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 @Service
-public class CustomDUserService implements UserDetailsService {
+public class CustomUserService implements UserDetailsService {
     @Autowired
     UserDao userDao;
 
@@ -34,4 +34,6 @@ public class CustomDUserService implements UserDetailsService {
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorities);
     }
+
+
 }

@@ -25,6 +25,8 @@ public interface UserDao extends tk.mybatis.mapper.common.Mapper<User> {
 
     @Select("select * from user where username = #{username}")
     User selectByUsername(String username);
+
+
 }
 
 

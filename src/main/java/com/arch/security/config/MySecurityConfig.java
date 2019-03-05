@@ -1,6 +1,6 @@
 package com.arch.security.config;
 
-import com.arch.security.service.CustomDUserService;
+import com.arch.security.service.CustomUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -15,7 +15,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     UserDetailsService customUserService(){ //注册UserDetailsService 的bean
-        return new CustomDUserService();
+        return new CustomUserService();
     }
 
     @Override
