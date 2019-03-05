@@ -1,0 +1,2 @@
+INSERT INTO jbr.user (id, password, username) VALUES (1, '$2a$10$MWlGmZmpU9CuvaCsWlV2a.jnyH0tIgXth99Lz7rYNS6bvTEKH3LgC', 'zhangsan');
+INSERT INTO jbr.user (id, password, username) VALUES (2, '$2a$10$yGj5pNUh.P2KTgtvSn3n0eTYBRN6Wcd5s7PFUu9zfSQw7dd4jgzO2', 'lisi');
