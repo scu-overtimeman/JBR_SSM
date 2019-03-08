@@ -1,6 +1,7 @@
 package com.arch.security.Controller;
 
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class KungfuController {
 	 * 登陆页
 	 * @return
 	 */
+
 	@GetMapping("/userlogin")
 	public String loginPage() {
 		return PREFIX+"login";
@@ -33,7 +35,6 @@ public class KungfuController {
 	 * @param path
 	 * @return
 	 */
-    @Secured("VIP1")
     @GetMapping("/level1/{path}")
 	public String level1(@PathVariable("path")String path) {
 		return PREFIX+"level1/"+path;
@@ -54,6 +55,7 @@ public class KungfuController {
 	 * @param path
 	 * @return
 	 */
+	@PreAuthorize(value = "hasRole('ADMIN')")
 	@GetMapping("/level3/{path}")
 	public String level3(@PathVariable("path")String path) {
 		return PREFIX+"level3/"+path;

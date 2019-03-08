@@ -8,9 +8,10 @@
 	<h1 align="center">欢迎登陆武林秘籍管理系统</h1>
 	<hr>
 	<div align="center">
-		<form action="" method="post">
-			用户名:<input name=""/><br>
-			密码:<input name=""><br/>
+		<form th:action="@{/login}" method="post">
+			用户名:<input name="username"/><br>
+			密码:<input name="password"><br/>
+			<input type = "checkbox" name="remember">记住我<br/>
 			<input type="submit" value="登陆">
 		</form>
 	</div>

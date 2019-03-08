@@ -1,11 +1,14 @@
 package com.arch.security.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Table(name = "`role`")
 public class Role {
     @Id
     @Column(name = "`id`")
+    @JsonIgnore
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 

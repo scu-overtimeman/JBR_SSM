@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.concurrent.ConcurrentHashMap;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class Springboot05SecurityApplicationTests {
@@ -19,7 +21,6 @@ public class Springboot05SecurityApplicationTests {
     UserDao userDao;
     @Test
     public void contextLoads() {
-
         for(int i = 0;i<10;i++){
 
         }
