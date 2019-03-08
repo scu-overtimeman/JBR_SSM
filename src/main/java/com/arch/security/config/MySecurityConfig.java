@@ -30,6 +30,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -70,16 +71,13 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
                 httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                httpServletResponse.setContentType("application/json;charset=UTF-8");
                 RespBean error = RespBean.error("权限不足，请联系管理员!");
-                System.out.println("嘟嘟");
                 returnByJson(httpServletResponse, error);
             }
         }).and().exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
             @Override
             public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                 // redirect to login page. Use https if forceHttps true
-                httpServletResponse.setContentType("application/json;charset=utf-8");
                 RespBean respBean = RespBean.error("没有登录");
                 returnByJson(httpServletResponse,respBean);
             }
@@ -91,7 +89,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-                        httpServletResponse.setContentType("application/json;charset=utf-8");
                         RespBean respBean = RespBean.ok("登录成功", UserUtils.getCurrentUser());
                         returnByJson(httpServletResponse, respBean);
                     }
@@ -100,7 +97,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
             public void onAuthenticationFailure(HttpServletRequest req,
                                                 HttpServletResponse httpServletResponse,
                                                 AuthenticationException e) throws IOException {
-                httpServletResponse.setContentType("application/json;charset=utf-8");
                 RespBean respBean = null;
                 if (e instanceof BadCredentialsException ||
                         e instanceof UsernameNotFoundException) {
@@ -120,7 +116,13 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 returnByJson(httpServletResponse, respBean);
             }
         });
-        http.logout().logoutSuccessUrl("/");
+        http.logout().logoutSuccessHandler(new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                RespBean respBean = RespBean.ok("注销成功");
+                returnByJson(httpServletResponse, respBean);
+            }
+        });
         //1.访问/logout 表示用户注销，清空session
         //2.注销成功会返回 /login?logout页面
         //3..logoutSuccessUrl("/") 设定注销成功以后的地址
@@ -138,6 +140,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     private void returnByJson(HttpServletResponse httpServletResponse, RespBean respBean) throws IOException {
+        httpServletResponse.setContentType("application/json;charset=utf-8");
         ObjectMapper om = new ObjectMapper();
         PrintWriter out = httpServletResponse.getWriter();
         out.write(om.writeValueAsString(respBean));
