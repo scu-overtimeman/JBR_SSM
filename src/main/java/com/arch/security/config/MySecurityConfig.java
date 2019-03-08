@@ -14,6 +14,7 @@ import org.springframework.security.authentication.*;
 
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,6 +24,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
@@ -36,16 +38,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true)
+
+
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    CustomMetadataSource metadataSource;
-    @Autowired
-    UrlAccessDecisionManager urlAccessDecisionManager;
-
-
-    @Autowired
     CustomUserService customUserService;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/index.html", "/static/**", "/login", "/favicon.ico");
@@ -55,41 +55,45 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //super.configure(auth);
         //定制请求的授权规则
-        http.authorizeRequests()
-                .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
-                    @Override
-                    public <O extends FilterSecurityInterceptor> O postProcess(O o) {
-                        o.setSecurityMetadataSource(metadataSource);
-                        o.setAccessDecisionManager(urlAccessDecisionManager);
-                        return o;
-                    }
-                })
-                .antMatchers("/").permitAll()
-                .antMatchers("/level1/**").hasRole("VIP1")
-                .antMatchers("/level2/**").hasRole("VIP2")
-                .antMatchers("/level3/**").hasRole("VIP3");
+//        http.authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/level1/**").permitAll()
+//                .antMatchers("/level2/**").hasRole("VIP2");
+        //.antMatchers("/level3/**").hasRole("VIP3");
         //开启自动配置的登录功能 如果没有权限 就重定向到登录页面
         //1. /login请求来到登录页
         //2. 重定向到/login?error表示登录失败
         //3.更多详细规则
+        //暂时关闭csrf
+
         http.csrf().disable().exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
             @Override
             public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
                 httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 httpServletResponse.setContentType("application/json;charset=UTF-8");
                 RespBean error = RespBean.error("权限不足，请联系管理员!");
-                returnJson(httpServletResponse, error);
+                System.out.println("嘟嘟");
+                returnByJson(httpServletResponse, error);
+            }
+        }).and().exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
+            @Override
+            public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+                // redirect to login page. Use https if forceHttps true
+                httpServletResponse.setContentType("application/json;charset=utf-8");
+                RespBean respBean = RespBean.error("没有登录");
+                returnByJson(httpServletResponse,respBean);
             }
         });
-        //暂时关闭csrf
-        http.formLogin().loginProcessingUrl("/login").failureForwardUrl("/login?error")
+
+
+        http.formLogin().loginProcessingUrl("/userlogin")
                 .usernameParameter("username").passwordParameter("password")
                 .successHandler(new AuthenticationSuccessHandler() {
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
                         RespBean respBean = RespBean.ok("登录成功", UserUtils.getCurrentUser());
-                        returnJson(httpServletResponse, respBean);
+                        returnByJson(httpServletResponse, respBean);
                     }
                 }).failureHandler(new AuthenticationFailureHandler() {
             @Override
@@ -113,7 +117,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                     respBean = RespBean.error("登录失败!");
                 }
                 httpServletResponse.setStatus(401);
-                returnJson(httpServletResponse, respBean);
+                returnByJson(httpServletResponse, respBean);
             }
         });
         http.logout().logoutSuccessUrl("/");
@@ -130,11 +134,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //super.configure(auth);
         auth.userDetailsService(customUserService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    private void returnJson(HttpServletResponse httpServletResponse, RespBean respBean) throws IOException {
+    private void returnByJson(HttpServletResponse httpServletResponse, RespBean respBean) throws IOException {
         ObjectMapper om = new ObjectMapper();
         PrintWriter out = httpServletResponse.getWriter();
         out.write(om.writeValueAsString(respBean));

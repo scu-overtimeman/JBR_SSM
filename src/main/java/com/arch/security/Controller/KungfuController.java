@@ -55,7 +55,7 @@ public class KungfuController {
 	 * @param path
 	 * @return
 	 */
-	@PreAuthorize(value = "hasRole('ADMIN')")
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/level3/{path}")
 	public String level3(@PathVariable("path")String path) {
 		return PREFIX+"level3/"+path;
