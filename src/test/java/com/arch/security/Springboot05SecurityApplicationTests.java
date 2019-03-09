@@ -3,6 +3,7 @@ package com.arch.security;
 import com.arch.security.dao.RoleDao;
 import com.arch.security.dao.UserDao;
 import com.arch.security.entity.User;
+import com.arch.security.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +20,19 @@ public class Springboot05SecurityApplicationTests {
 
     @Autowired
     UserDao userDao;
+    @Autowired
+    UserService userService;
     @Test
     public void contextLoads() {
         for(int i = 0;i<10;i++){
 
         }
     }
+    @Test
+    public void userServiceTest(){
+        User user = new User();
+        user.setUsername("lisi");
+        userDao.insert(user);
+    }
+
 }

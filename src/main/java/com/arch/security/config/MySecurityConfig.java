@@ -1,18 +1,15 @@
 package com.arch.security.config;
 
 import com.arch.security.dto.RespBean;
-import com.arch.security.service.CustomUserService;
-import com.arch.security.utils.UserUtils;
+import com.arch.security.service.UserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
 
-import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,13 +18,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -45,7 +40,7 @@ import java.io.PrintWriter;
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    CustomUserService customUserService;
+    UserService customUserService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -66,7 +61,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         //2. 重定向到/login?error表示登录失败
         //3.更多详细规则
         //暂时关闭csrf
-
         http.csrf().disable().exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
             @Override
             public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
