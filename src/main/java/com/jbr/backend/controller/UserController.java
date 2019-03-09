@@ -1,4 +1,4 @@
-package com.jbr.backend.Controller;
+package com.jbr.backend.controller;
 
 import com.jbr.backend.dto.RespBean;
 import com.jbr.backend.dto.SignUpRequest;
