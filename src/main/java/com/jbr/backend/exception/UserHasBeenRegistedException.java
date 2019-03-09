@@ -1,4 +1,4 @@
-package com.arch.security.exception;
+package com.jbr.backend.exception;
 
 public class UserHasBeenRegistedException extends RuntimeException {
 

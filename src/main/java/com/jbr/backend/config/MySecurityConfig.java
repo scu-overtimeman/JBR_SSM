@@ -1,7 +1,7 @@
-package com.arch.security.config;
+package com.jbr.backend.config;
 
-import com.arch.security.dto.RespBean;
-import com.arch.security.service.UserService;
+import com.jbr.backend.dto.RespBean;
+import com.jbr.backend.service.UserService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

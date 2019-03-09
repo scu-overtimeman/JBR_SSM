@@ -1,10 +1,10 @@
-package com.arch.security.Controller;
+package com.jbr.backend.Controller;
 
-import com.arch.security.dto.RespBean;
-import com.arch.security.dto.SignUpRequest;
-import com.arch.security.entity.User;
-import com.arch.security.exception.UserHasBeenRegistedException;
-import com.arch.security.service.UserService;
+import com.jbr.backend.dto.RespBean;
+import com.jbr.backend.dto.SignUpRequest;
+import com.jbr.backend.entity.User;
+import com.jbr.backend.exception.UserHasBeenRegistedException;
+import com.jbr.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

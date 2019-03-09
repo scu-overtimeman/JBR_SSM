@@ -1,17 +1,15 @@
-package com.arch.security.service;
+package com.jbr.backend.service;
 
-import com.arch.security.dao.UserDao;
-import com.arch.security.entity.Role;
-import com.arch.security.entity.User;
-import com.arch.security.exception.UserHasBeenRegistedException;
+import com.jbr.backend.dao.UserDao;
+import com.jbr.backend.entity.Role;
+import com.jbr.backend.entity.User;
+import com.jbr.backend.exception.UserHasBeenRegistedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

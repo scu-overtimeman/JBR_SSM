@@ -1,11 +1,9 @@
-package com.arch.security.dao;
+package com.jbr.backend.dao;
 
-import com.arch.security.entity.User;
+import com.jbr.backend.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityResult;
 
 /**
 * 通用 Mapper 代码生成器
@@ -20,7 +18,7 @@ public interface UserDao extends tk.mybatis.mapper.common.Mapper<User> {
             @Result(column="id", property="id", jdbcType= JdbcType.INTEGER, id=true),
             @Result(column="username", property="username", jdbcType=JdbcType.VARCHAR),
             @Result(column="password", property="password", jdbcType=JdbcType.VARCHAR),
-            @Result(column = "id",property = "roles",many = @Many(select = "com.arch.security.dao.RoleDao.selectAllRolesByUserId"))
+            @Result(column = "id",property = "roles",many = @Many(select = "RoleDao.selectAllRolesByUserId"))
     })
 
     @Select("select * from user where username = #{username}")

@@ -1,6 +1,6 @@
-package com.arch.security.dao;
+package com.jbr.backend.dao;
 
-import com.arch.security.entity.Role;
+import com.jbr.backend.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;

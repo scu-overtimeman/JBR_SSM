@@ -1,18 +1,13 @@
-package com.arch.security;
+package com.jbr.backend;
 
-import com.arch.security.dao.RoleDao;
-import com.arch.security.dao.UserDao;
-import com.arch.security.entity.User;
-import com.arch.security.service.UserService;
+import com.jbr.backend.dao.UserDao;
+import com.jbr.backend.entity.User;
+import com.jbr.backend.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
-import tk.mybatis.mapper.entity.Example;
-
-import java.util.concurrent.ConcurrentHashMap;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

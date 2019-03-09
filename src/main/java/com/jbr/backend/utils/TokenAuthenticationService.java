@@ -1,4 +1,4 @@
-package com.arch.security.utils;
+package com.jbr.backend.utils;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

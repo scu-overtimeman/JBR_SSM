@@ -1,4 +1,4 @@
-package com.arch.security.entity;
+package com.jbr.backend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

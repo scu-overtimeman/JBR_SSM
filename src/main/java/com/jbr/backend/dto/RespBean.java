@@ -1,4 +1,4 @@
-package com.arch.security.dto;
+package com.jbr.backend.dto;
 
 public class RespBean {
     private Integer status;
