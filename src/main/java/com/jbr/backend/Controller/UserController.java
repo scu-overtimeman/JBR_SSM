@@ -13,8 +13,12 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/registry")
     public @ResponseBody
@@ -31,6 +35,4 @@ public class UserController {
             return RespBean.error("注册失败");
         }
     }
-
-
 }

@@ -17,10 +17,10 @@ import java.util.Optional;
  */
 @Component
 public class TokenAuthenticationService {
-    public static final long EXPIRATION = 864_000_000;
+    private static final long EXPIRATION = 864_000_000;
     private static String SECRET;
-    public static final String TOKEN_PREFIX = "Bearer";
-    public static final String HEADER_STRING = "Authorization";
+    private static final String TOKEN_PREFIX = "Bearer";
+    private static final String HEADER_STRING = "Authorization";
 
     public static String addAuthentication(String userId) {
         return Jwts.builder()

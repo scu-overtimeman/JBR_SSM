@@ -40,9 +40,11 @@
         <!--<table tableName="user" >-->
             <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
         <!--</table>-->
-        <table tableName="user_role" >
+        <table tableName="user" >
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
-
+        <table tableName="role" >
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
     </context>
 </generatorConfiguration>

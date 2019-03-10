@@ -26,7 +26,8 @@ public class Springboot05SecurityApplicationTests {
     @Test
     public void userServiceTest(){
         User user = new User();
-        user.setUsername("lisi");
+        user.setUsername("test");
+        user.setPassword("111");
         userDao.insert(user);
     }
 

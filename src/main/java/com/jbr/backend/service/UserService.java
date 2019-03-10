@@ -44,6 +44,7 @@ public class UserService implements UserDetailsService {
         try {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userDao.insert(user);
+
             return true;
         }catch (Exception e){
             System.out.println(Arrays.toString(e.getStackTrace()));
