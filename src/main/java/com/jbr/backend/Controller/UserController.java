@@ -1,8 +1,9 @@
 package com.jbr.backend.Controller;
 
-import com.jbr.backend.dto.ModifyUserRolesRequest;
+import com.jbr.backend.dto.request.ModifyUserRolesRequest;
 import com.jbr.backend.dto.RespBean;
-import com.jbr.backend.dto.SignUpRequest;
+import com.jbr.backend.dto.request.SignUpRequest;
+import com.jbr.backend.entity.Role;
 import com.jbr.backend.entity.User;
 import com.jbr.backend.exception.UserHasBeenRegistedException;
 import com.jbr.backend.service.RoleService;
@@ -12,6 +13,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -48,5 +51,29 @@ public class UserController {
         }catch (Exception e){
             return RespBean.error("修改用户权限失败");
         }
+    }
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/allUsers")
+    public @ResponseBody RespBean getAllUsers(){
+        try{
+            return RespBean.ok("获取所有用户信息成功",userService.getAllUsers());
+        }catch (Exception e){
+            return RespBean.error("获取用户信息失败");
+        }
+    }
+    @GetMapping("/test")
+    public @ResponseBody RespBean test(){
+        User user = new User();
+        user.setUsername("zhangsan");
+        user.setPassword("123");
+        List<Role> roles= new ArrayList<Role>();
+        Role role1 = new Role();
+        role1.setName("ROLE_ADMIN");
+        Role role2 = new Role();
+        role2.setName("ROLE_VIP");
+        roles.add(role1);
+        roles.add(role2);
+        user.setRoles(roles);
+        return RespBean.ok("成功",user);
     }
 }

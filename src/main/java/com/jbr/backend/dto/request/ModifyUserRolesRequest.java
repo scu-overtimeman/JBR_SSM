@@ -1,4 +1,4 @@
-package com.jbr.backend.dto;
+package com.jbr.backend.dto.request;
 
 import java.util.List;
 

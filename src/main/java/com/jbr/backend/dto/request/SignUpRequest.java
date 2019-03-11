@@ -1,4 +1,4 @@
-package com.jbr.backend.dto;
+package com.jbr.backend.dto.request;
 
 public class SignUpRequest {
     private String userName;
