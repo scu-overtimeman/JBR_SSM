@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class Springboot05SecurityApplicationTests {
@@ -19,8 +21,8 @@ public class Springboot05SecurityApplicationTests {
     UserService userService;
     @Test
     public void contextLoads() {
-        for(int i = 0;i<10;i++){
+        List<User> a =userDao.selectAll();
+        System.out.println(a);
 
-        }
     }
 }

@@ -68,7 +68,7 @@ public class UserController {
     @GetMapping("/allRoles")
     public @ResponseBody RespBean getAllRoles(){
         try{
-            return RespBean.ok("获取所有角色信息成功",userService.getAllUsers());
+            return RespBean.ok("获取所有角色信息成功",roleService.getAllRoles());
         }catch (Exception e){
             return RespBean.error("获取角色信息失败");
         }
