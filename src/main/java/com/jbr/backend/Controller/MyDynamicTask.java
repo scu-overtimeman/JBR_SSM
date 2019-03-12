@@ -16,7 +16,6 @@ import java.util.Date;
 //实现动态定时任务
 @Component
 @EnableScheduling
-
 public class MyDynamicTask implements SchedulingConfigurer {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 

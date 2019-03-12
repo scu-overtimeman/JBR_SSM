@@ -37,7 +37,9 @@ public class UserController {
             userService.register(user);
             return RespBean.ok("注册成功");
         } catch (UserHasBeenRegistedException e) {
-            return RespBean.error("用户名重复");
+            RespBean respBean = RespBean.error("用户名已存在");
+            respBean.setStatus(250);
+            return respBean;
         } catch (Exception e) {
             return RespBean.error("注册失败");
         }
@@ -59,6 +61,16 @@ public class UserController {
             return RespBean.ok("获取所有用户信息成功",userService.getAllUsers());
         }catch (Exception e){
             return RespBean.error("获取用户信息失败");
+        }
+    }
+
+    @Secured("ROLE_ADMIN")
+    @GetMapping("/allRoles")
+    public @ResponseBody RespBean getAllRoles(){
+        try{
+            return RespBean.ok("获取所有角色信息成功",userService.getAllUsers());
+        }catch (Exception e){
+            return RespBean.error("获取角色信息失败");
         }
     }
     @GetMapping("/test")

@@ -50,4 +50,8 @@ public class RoleService {
             throw e;
         }
     }
+    @Secured("ROLE_ADMIN")
+    public List<Role> getAllUsers(){
+        return roleDao.selectAll();
+    }
 }
