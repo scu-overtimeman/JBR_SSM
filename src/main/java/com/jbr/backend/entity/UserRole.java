@@ -15,16 +15,14 @@ public class UserRole {
     @Column(name = "`role_id`")
     private Integer roleId;
 
-    /**
-     * @return id
-     */
-    public UserRole(Integer userId,Integer roleId){
+    public UserRole(Integer userId, Integer roleId) {
         this.userId = userId;
         this.roleId = roleId;
     }
-    public UserRole(){
 
-    }
+    /**
+     * @return id
+     */
     public Integer getId() {
         return id;
     }

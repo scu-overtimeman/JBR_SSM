@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 *
 * @author mapper-generator
 */
-@Mapper
 @Component
+@Mapper
 public interface UserRoleDao extends tk.mybatis.mapper.common.Mapper<UserRole> {
 
 }
