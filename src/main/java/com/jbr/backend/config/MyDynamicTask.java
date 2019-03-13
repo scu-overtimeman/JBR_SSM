@@ -1,4 +1,4 @@
-package com.jbr.backend.Controller;
+package com.jbr.backend.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;

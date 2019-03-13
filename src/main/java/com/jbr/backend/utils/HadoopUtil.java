@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.net.URI;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * 类或方法的功能描述 :Hadoop工具类
@@ -30,6 +32,7 @@ public class HadoopUtil {
 
         Configuration configuration = new Configuration();
         configuration.set("fs.defaultFS", hdfsPath);
+
         return configuration;
     }
 
@@ -54,6 +57,7 @@ public class HadoopUtil {
     public void getName() {
         hdfsName = this.username;
     }
+
 
     public static String getHdfsPath() {
         return hdfsPath;
