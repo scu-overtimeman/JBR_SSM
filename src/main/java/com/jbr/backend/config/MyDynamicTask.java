@@ -1,5 +1,6 @@
 package com.jbr.backend.config;
 
+import com.jbr.backend.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
