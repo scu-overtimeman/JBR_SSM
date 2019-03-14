@@ -61,12 +61,12 @@ public class HadoopController {
         }
     }
 
-    @GetMapping("/getWc")
-    public RespBean getWc() throws Exception {
+    @GetMapping("/getFile")
+    public RespBean getWc(@RequestParam("path")String path) throws Exception {
 
         try{
             FileSystem fs = HadoopUtil.getFileSystem();
-            String path = "/usr/output/part-r-00000";
+
             FSDataInputStream fsDataInputStream = fs.open(new Path(path));
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fsDataInputStream, "utf-8"));
             String line;
