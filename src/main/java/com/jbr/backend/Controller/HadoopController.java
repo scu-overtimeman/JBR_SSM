@@ -1,6 +1,7 @@
 package com.jbr.backend.Controller;
 
 import com.jbr.backend.dto.RespBean;
+import com.jbr.backend.entity.Position;
 import com.jbr.backend.utils.HadoopUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.fs.FSDataInputStream;
@@ -15,8 +16,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.http.HttpClient;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * 类或方法的功能描述 :TODO
@@ -68,8 +72,13 @@ public class HadoopController {
 
     @GetMapping("/test")
     public RespBean test() throws Exception {
-        String[] line = HadoopUtil.getLineFile("/usr/output/part-r-00000");
-        return RespBean.ok("文件内容",line);
+        List<String[]> strings = HadoopUtil.getLineFile("/usr/output/part-r-00000");
+        ArrayList<Position> positions = new ArrayList<>();
+        for (String[] e :
+                strings) {
+            positions.add(new Position(e[0],Integer.valueOf(e[1])));
+        }
+        return RespBean.ok("文件内容",positions);
     }
 
 

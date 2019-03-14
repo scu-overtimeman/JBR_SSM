@@ -12,8 +12,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * 类或方法的功能描述 :Hadoop工具类
@@ -74,13 +76,18 @@ public class HadoopUtil {
         return username;
     }
 
-    public static String[] getLineFile(String path) throws Exception {
+    public static List<String[]> getLineFile(String path) throws Exception {
         FileSystem fs = getFileSystem();
         FSDataInputStream fsDataInputStream = fs.open(new Path(path));
         BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream,"utf-8"));
-        String line = br.readLine();
-
-        return  line.split(" ");
+        String line ;
+        String[] lineSpilt;
+        ArrayList<String[]> strings = new ArrayList<>();
+        while ((line = br.readLine())!=null ){
+            lineSpilt = line.split(" ");
+            strings.add(lineSpilt);
+        }
+        return strings;
     }
 }
 
