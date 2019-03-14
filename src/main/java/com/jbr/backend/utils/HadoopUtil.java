@@ -1,11 +1,16 @@
 package com.jbr.backend.utils;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Collections;
@@ -49,6 +54,8 @@ public class HadoopUtil {
         return fileSystem;
     }
 
+
+
     @PostConstruct
     public void getPath() {
         hdfsPath = this.path;
@@ -65,6 +72,15 @@ public class HadoopUtil {
 
     public String getUsername() {
         return username;
+    }
+
+    public static String[] getLineFile(String path) throws Exception {
+        FileSystem fs = getFileSystem();
+        FSDataInputStream fsDataInputStream = fs.open(new Path(path));
+        BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream,"utf-8"));
+        String line = br.readLine();
+
+        return  line.split(" ");
     }
 }
 
