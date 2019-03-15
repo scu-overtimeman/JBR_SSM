@@ -2,6 +2,7 @@ package com.jbr.backend.service;
 
 import com.jbr.backend.MapReduce.SalarySearchMapper;
 import com.jbr.backend.MapReduce.SalarySearchReduce;
+import com.jbr.backend.utils.DescSort;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -72,7 +73,8 @@ public class HadoopService {
         job.setReducerClass(SalarySearchReduce.class);
 
         //设置输出类型
-        job.setOutputKeyClass(Text.class);
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(Text.class);
 
         //设置输入输出
