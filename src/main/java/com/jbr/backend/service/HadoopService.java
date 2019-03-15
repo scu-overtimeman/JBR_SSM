@@ -53,7 +53,7 @@ public class HadoopService {
 //        return false;
 //    }
 
-    public boolean salarySearch(String minSalary, String maxSalary)
+    public boolean salarySearch(String inputFileDir, String outputFileDir, String minSalary, String maxSalary)
             throws Exception {
 
         //设置薪资范围,不需要的时候不设置即可
@@ -76,9 +76,10 @@ public class HadoopService {
         job.setSortComparatorClass(DescSort.class);
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(Text.class);
-        HadoopUtil.DeleteFile("/usr/output");
+
         //设置输入输出
         FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/output");
         FileOutputFormat.setOutputPath(job, new Path("/usr/output"));
         if (job.waitForCompletion(true)) {
             System.out.println("程序执行结束");
