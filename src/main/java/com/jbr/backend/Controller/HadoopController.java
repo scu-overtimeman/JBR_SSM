@@ -4,26 +4,16 @@ import com.jbr.backend.dto.RespBean;
 import com.jbr.backend.entity.Position;
 import com.jbr.backend.utils.HadoopUtil;
 import org.apache.commons.lang.StringUtils;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.security.auth.login.Configuration;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.http.HttpClient;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * 类或方法的功能描述 :TODO
+ *
  * @date: 2018-11-28 13:51
  */
 @RestController
@@ -32,6 +22,7 @@ public class HadoopController {
 
     /**
      * 创建文件夹
+     *
      * @param path
      * @return
      * @throws Exception
@@ -56,8 +47,8 @@ public class HadoopController {
     }
 
     @PostMapping("/createFile")
-    public RespBean createFile(@RequestParam("path")String path) throws Exception {
-        if(StringUtils.isEmpty(path)){
+    public RespBean createFile(@RequestParam("path") String path) throws Exception {
+        if (StringUtils.isEmpty(path)) {
             return RespBean.error("请求参数为空");
         }
         FileSystem fs = HadoopUtil.getFileSystem();
@@ -70,6 +61,7 @@ public class HadoopController {
         } else {
             return RespBean.error("create file fail");
         }
+
     }
 
     @GetMapping("/test")
@@ -79,12 +71,10 @@ public class HadoopController {
         ArrayList<Position> positions = new ArrayList<>();
         for (String[] e :
                 strings) {
-            positions.add(new Position(e[0],Integer.valueOf(e[1])));
+            positions.add(new Position(e[0], Integer.valueOf(e[1])));
         }
-
         return RespBean.ok("文件内容",positions);
     }
-
 
 
 }
