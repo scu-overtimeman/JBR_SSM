@@ -17,6 +17,7 @@ import java.io.IOException;
 @Service
 public class HadoopService {
 
+    // git
 
     private static final String HDFS_URL = "hdfs://127.0.0.1:9000";
     private Configuration configuration;
