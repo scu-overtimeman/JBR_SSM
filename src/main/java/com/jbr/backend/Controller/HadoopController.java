@@ -54,12 +54,14 @@ public class HadoopController {
             return RespBean.error("create dir fail");
         }
     }
+
     @PostMapping("/createFile")
     public RespBean createFile(@RequestParam("path")String path) throws Exception {
         if(StringUtils.isEmpty(path)){
             return RespBean.error("请求参数为空");
         }
         FileSystem fs = HadoopUtil.getFileSystem();
+
 
         Path newPath = new Path(path);
         boolean isOk = fs.createNewFile(newPath);
@@ -72,15 +74,16 @@ public class HadoopController {
 
     @GetMapping("/test")
     public RespBean test() throws Exception {
+
         List<String[]> strings = HadoopUtil.getLineFile("/usr/output/part-r-00000");
         ArrayList<Position> positions = new ArrayList<>();
         for (String[] e :
                 strings) {
             positions.add(new Position(e[0],Integer.valueOf(e[1])));
         }
+
         return RespBean.ok("文件内容",positions);
     }
-
 
 
 

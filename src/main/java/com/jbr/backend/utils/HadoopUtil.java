@@ -89,6 +89,17 @@ public class HadoopUtil {
         }
         return strings;
     }
+    public static boolean DeleteFile(String path) throws Exception {
+        FileSystem fs = getFileSystem();
+        if(fs.exists(new Path(path))){
+            if (fs.delete(new Path(path),false)){
+                return true;
+            }
+            return false;
+        }else {
+            return false;
+        }
+    }
 }
 
 
