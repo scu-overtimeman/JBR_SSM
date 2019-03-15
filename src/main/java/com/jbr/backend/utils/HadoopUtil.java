@@ -84,7 +84,7 @@ public class HadoopUtil {
         String[] lineSpilt;
         ArrayList<String[]> strings = new ArrayList<>();
         while ((line = br.readLine())!=null ){
-            lineSpilt = line.split(" ");
+            lineSpilt = line.split("\t");
             strings.add(lineSpilt);
         }
         return strings;
