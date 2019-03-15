@@ -76,16 +76,15 @@ public class HadoopUtil {
         return username;
     }
 
-    public static List<String[]> getLineFile(String path) throws Exception {
+    public static List<String> getLineFile(String path) throws Exception {
         FileSystem fs = getFileSystem();
         FSDataInputStream fsDataInputStream = fs.open(new Path(path));
         BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream,"utf-8"));
         String line ;
         String[] lineSpilt;
-        ArrayList<String[]> strings = new ArrayList<>();
+        ArrayList<String> strings = new ArrayList<>();
         for(int i = 0;i<100&&(line = br.readLine())!=null;i++){
-            lineSpilt = line.split("\t");
-            strings.add(lineSpilt[1].split("_"));
+            strings.add(line);
         }
         return strings;
     }
