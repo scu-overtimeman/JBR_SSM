@@ -1,7 +1,6 @@
 package com.jbr.backend.service;
 
-import com.jbr.backend.MapReduce.SalarySearchMapper;
-import com.jbr.backend.MapReduce.SalarySearchReduce;
+import com.jbr.backend.MapReduce.*;
 import com.jbr.backend.utils.DescSort;
 import com.jbr.backend.utils.HadoopUtil;
 import org.apache.hadoop.conf.Configuration;
@@ -18,6 +17,7 @@ import java.io.IOException;
 @Service
 public class HadoopService {
 
+    // git
 
     private static final String HDFS_URL = "hdfs://127.0.0.1:9000";
     private Configuration configuration;
@@ -27,45 +27,12 @@ public class HadoopService {
         configuration.set("fs.default.name", HDFS_URL);
     }
 
-
-//    public boolean location(String inputFileDir, String outputFileDir)
-//            throws IOException, ClassNotFoundException, InterruptedException {
-//        //创建工作跟踪者的对象
-//        Job job = Job.getInstance(configuration, "LocationShow");
-//        job.setJarByClass(HadoopService.class);
-//        job.setMapperClass(LocationMapper.class);
-//        job.setReducerClass(LocationReducer.class);
-//
-//
-//        //设置reducer的输出的类型
-//        job.setOutputKeyClass(Text.class);
-//        job.setOutputValueClass(Text.class);
-//
-//        //指定输入输出文件的目录
-//        FileInputFormat.setInputPaths(job, new Path(inputFileDir));
-//        FileOutputFormat.setOutputPath(job, new Path(outputFileDir));
-//
-//        //判断是否执行结束
-//        if (job.waitForCompletion(true)) {
-//            System.out.println("程序执行结束!");
-//            return true;
-//        }
-//        return false;
-//    }
-
-    public boolean salarySearch(String inputFileDir, String outputFileDir, String minSalary, String maxSalary)
+    public boolean salarySearch(String minSalary, String maxSalary)
             throws Exception {
 
         //设置薪资范围,不需要的时候不设置即可
         configuration.set("maxSalary", maxSalary);
         configuration.set("minSalary", minSalary);
-        return salary();
-
-    }
-
-
-    public boolean salary()
-            throws Exception {
 
         Job job = Job.getInstance(configuration, "SalarySearch");
         job.setJarByClass(HadoopService.class);
@@ -79,8 +46,37 @@ public class HadoopService {
 
         //设置输入输出
         FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
-        HadoopUtil.DeleteFile("/usr/output");
-        FileOutputFormat.setOutputPath(job, new Path("/usr/output"));
+        HadoopUtil.DeleteFile("/usr/SalarySearchOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/SalarySearchOutput"));
+        if (job.waitForCompletion(true)) {
+            System.out.println("程序执行结束");
+            return true;
+        }
+        return false;
+
+
+    }
+
+    public boolean careerSearch(String career)
+            throws Exception {
+
+        //设置薪资范围,不需要的时候不设置即可
+        configuration.set("career", career);
+
+        Job job = Job.getInstance(configuration, "CareerSearch");
+        job.setJarByClass(HadoopService.class);
+        job.setMapperClass(CareerSearchMapper.class);
+        job.setReducerClass(CareerSearchReduce.class);
+
+        //设置输出类型
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(Text.class);
+
+        //设置输入输出
+        FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/CareerSearchOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/CareerSearchOutput"));
         if (job.waitForCompletion(true)) {
             System.out.println("程序执行结束");
             return true;
@@ -88,61 +84,130 @@ public class HadoopService {
         return false;
     }
 
-//    public boolean academic(String inputFileDir, String outputFileDir)
-//            throws IOException, ClassNotFoundException, InterruptedException {
-//        //创建工作跟踪者对象
-//        Job job = Job.getInstance(configuration, "AcademicShow");
-//        job.setJarByClass(HadoopService.class);
-//        job.setMapperClass(AcademicMapper.class);
-//        job.setReducerClass(AcademicReducer.class);
-//
-//        //设置输出类型
-//        job.setOutputKeyClass(Text.class);
-//        job.setOutputValueClass(IntWritable.class);
-//
-//        //设置输入输出
-//        FileInputFormat.setInputPaths(job, new Path(inputFileDir));
-//        FileOutputFormat.setOutputPath(job, new Path(outputFileDir));
-//
-//        if (job.waitForCompletion(true)) {
-//            System.out.println("程序执行结束");
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     * 统计职能分类的数据，以及每个职能的最低薪资、最高薪资和该职能对应的人员需求
-//     *
-//     * @param inputFileDir  数据路径
-//     * @param outputFileDir 输出路径
-//     * @return hadoop是否执行成功
-//     * @throws IOException
-//     * @throws ClassNotFoundException
-//     * @throws InterruptedException
-//     */
-//    public boolean function(String inputFileDir, String outputFileDir)
-//            throws IOException, ClassNotFoundException, InterruptedException {
-//        //创建工作跟踪对象
-//        Job job = Job.getInstance(configuration, "getSearchSalary");
-//        job.setJarByClass(HadoopService.class);
-//        job.setMapperClass(FunctionMapper.class);
-//        job.setReducerClass(FunctionReducer.class);
-//
-//        //设置reducer的输出的类型
-//        job.setOutputKeyClass(Text.class);
-//        job.setOutputValueClass(Text.class);
-//
-//        //指定输入输出文件的目录
-//        FileInputFormat.setInputPaths(job, new Path(inputFileDir));
-//        FileOutputFormat.setOutputPath(job, new Path(outputFileDir));
-//
-//        //判断是否执行结束
-//        if (job.waitForCompletion(true)) {
-//            System.out.println("程序执行结束!");
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean areaSearch(String area)
+            throws Exception {
 
+
+        configuration.set("area", area);
+
+        Job job = Job.getInstance(configuration, "AreaSearch");
+        job.setJarByClass(HadoopService.class);
+        job.setMapperClass(AreaSearchMapper.class);
+        job.setReducerClass(AreaSearchReduce.class);
+
+        //设置输出类型
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        //设置输入输出
+        FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/AreaSearchOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/AreaSearchOutput"));
+        if (job.waitForCompletion(true)) {
+            System.out.println("程序执行结束");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean salaryStatistics() throws Exception {
+
+        Job job = Job.getInstance(configuration, "SalaryStatistics");
+        job.setJarByClass(HadoopService.class);
+        job.setMapperClass(SalaryStatisticsMapper.class);
+        job.setReducerClass(SalaryStatisticsReduce.class);
+
+        //设置输出类型
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        //设置输入输出
+        FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/SalaryStatisticsOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/SalaryStatisticsOutput"));
+        if (job.waitForCompletion(true)) {
+            System.out.println("程序执行结束");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean educationStatistics(String career) throws Exception {
+
+
+        configuration.set("career", career);
+
+
+        Job job = Job.getInstance(configuration, "EducationStatistics");
+        job.setJarByClass(HadoopService.class);
+        job.setMapperClass(EducationStatisticsMapper.class);
+        job.setReducerClass(EducationStatisticsReduce.class);
+
+        //设置输出类型
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        //设置输入输出
+        FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/EducationStatisticsOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/EducationStatisticsOutput"));
+        if (job.waitForCompletion(true)) {
+            System.out.println("程序执行结束");
+            return true;
+        }
+        return false;
+    }
+
+    public boolean areaStatistics() throws Exception {
+
+
+        Job job = Job.getInstance(configuration, "AreaStatistics");
+        job.setJarByClass(HadoopService.class);
+        job.setMapperClass(AreaStatisticsMapper.class);
+        job.setReducerClass(AreaStatisticsReduce.class);
+
+        //设置输出类型
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        //设置输入输出
+        FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/AreaStatisticsOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/AreaStatisticsOutput"));
+        if (job.waitForCompletion(true)) {
+            System.out.println("程序执行结束");
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean careerStatistics() throws Exception {
+
+
+        Job job = Job.getInstance(configuration, "careerStatistics");
+        job.setJarByClass(HadoopService.class);
+        job.setMapperClass(CareerStatisticsMapper.class);
+        job.setReducerClass(CareerStatisticsReduce.class);
+
+        //设置输出类型
+        job.setSortComparatorClass(DescSort.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        //设置输入输出
+        FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/CareerStatisticsOutput");
+        FileOutputFormat.setOutputPath(job, new Path("/usr/CareerStatisticsOutput"));
+        if (job.waitForCompletion(true)) {
+            System.out.println("程序执行结束");
+            return true;
+        }
+        return false;
+    }
 }
+
