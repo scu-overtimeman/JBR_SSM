@@ -1,11 +1,11 @@
-package com.jbr.backend.entity;
+package com.jbr.backend.dto.response;
 
-public class AreaSearchResponse {
+public class LPSResponse {
     private String location;
     private String position;
     private String salary;
 
-    public AreaSearchResponse(String location, String position, String salary) {
+    public LPSResponse(String location, String position, String salary) {
         this.location = location;
         this.position = position;
         this.salary = salary;

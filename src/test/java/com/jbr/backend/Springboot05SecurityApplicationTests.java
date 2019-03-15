@@ -21,6 +21,8 @@ public class Springboot05SecurityApplicationTests {
     HadoopService hadoopService;
     @Test
     public void contextLoads() throws Exception {
-        hadoopService.areaSearch("四川省-成都市");
+
+//        hadoopService.educationStatistics("教师");
+//        hadoopService.salaryStatistics();
     }
 }
