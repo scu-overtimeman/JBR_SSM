@@ -3,6 +3,7 @@ package com.jbr.backend.service;
 import com.jbr.backend.MapReduce.SalarySearchMapper;
 import com.jbr.backend.MapReduce.SalarySearchReduce;
 import com.jbr.backend.utils.DescSort;
+import com.jbr.backend.utils.HadoopUtil;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -53,7 +54,7 @@ public class HadoopService {
 //    }
 
     public boolean salarySearch(String inputFileDir, String outputFileDir, String minSalary, String maxSalary)
-            throws IOException, ClassNotFoundException, InterruptedException {
+            throws Exception {
 
         //设置薪资范围,不需要的时候不设置即可
         configuration.set("maxSalary", maxSalary);
@@ -64,8 +65,7 @@ public class HadoopService {
 
 
     public boolean salary()
-            throws IOException, ClassNotFoundException, InterruptedException {
-
+            throws Exception {
 
         Job job = Job.getInstance(configuration, "SalarySearch");
         job.setJarByClass(HadoopService.class);
@@ -79,6 +79,7 @@ public class HadoopService {
 
         //设置输入输出
         FileInputFormat.setInputPaths(job, new Path("/usr/input/*"));
+        HadoopUtil.DeleteFile("/usr/output");
         FileOutputFormat.setOutputPath(job, new Path("/usr/output"));
         if (job.waitForCompletion(true)) {
             System.out.println("程序执行结束");
