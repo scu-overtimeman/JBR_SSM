@@ -34,11 +34,11 @@ public class CareerSearchMapper extends Mapper<LongWritable, Text, Text, Text>{
                 JSONObject information=jsonObj.getJSONObject(data);
                 if(information.getString("职位类型").contains(career)){
                     k.set(data);
-                    context.write(k, new Text(new Text(data+"-"+
-                                                               information.getString("单位")+"-"+
-                                                               information.getInt("薪资上限")+"-"+
-                                                               information.getInt("薪资下限")+"-"+
-                                                               information.getString("学历要求")+"-"+
+                    context.write(k, new Text(new Text(data+"_"+
+                                                               information.getString("单位")+"_"+
+                                                               information.getInt("薪资上限")+"_"+
+                                                               information.getInt("薪资下限")+"_"+
+                                                               information.getString("学历要求")+"_"+
                                                                information.getString("地域"))));
                 }
             }
