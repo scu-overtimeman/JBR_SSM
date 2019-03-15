@@ -1,22 +1,22 @@
 package com.jbr.backend.dto.request;
 
 public class SearchSalaryRangeRequest {
-    private int ceiling = 0;
-    private int floor = 0;
+    private String ceiling;
+    private String floor;
 
-    public int getCeiling() {
+    public String getCeiling() {
         return ceiling;
     }
 
-    public void setCeiling(int ceiling) {
+    public void setCeiling(String ceiling) {
         this.ceiling = ceiling;
     }
 
-    public int getFloor() {
+    public String getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
+    public void setFloor(String floor) {
         this.floor = floor;
     }
 }

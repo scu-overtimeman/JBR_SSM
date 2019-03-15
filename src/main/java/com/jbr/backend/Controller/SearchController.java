@@ -4,12 +4,15 @@ import com.jbr.backend.dto.RespBean;
 import com.jbr.backend.dto.request.SearchBoxRequest;
 import com.jbr.backend.dto.request.SearchRegionRequest;
 import com.jbr.backend.dto.request.SearchSalaryRangeRequest;
+import com.jbr.backend.service.SearchService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("transaction/")
 @RestController
 public class SearchController {
-
+    @Autowired
+    SearchService searchService;
     @PostMapping("searchBox")
     public @ResponseBody
     RespBean search(@RequestBody SearchBoxRequest searchBoxRequest){
@@ -25,8 +28,9 @@ public class SearchController {
 
     @PostMapping("searchSalaryRange")
     public @ResponseBody
-    RespBean search(@RequestBody SearchSalaryRangeRequest searchSalaryRangeRequest){
-        return RespBean.ok("3");
+    RespBean search(@RequestBody SearchSalaryRangeRequest searchSalaryRangeRequest) throws Exception {
+
+        return RespBean.ok("检索成功",searchService.salarySearch(searchSalaryRangeRequest.getFloor(),searchSalaryRangeRequest.getCeiling()));
     }
     @GetMapping("search")
     public @ResponseBody

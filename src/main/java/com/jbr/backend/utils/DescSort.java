@@ -1,11 +1,12 @@
 package com.jbr.backend.utils;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.WritableComparator;
 
 public class DescSort extends WritableComparator {
 
     public DescSort() {
-        super(LongWritable.class,true);
+        super(IntWritable.class,true);
     }
 
     @Override

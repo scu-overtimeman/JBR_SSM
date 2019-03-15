@@ -64,17 +64,6 @@ public class HadoopController {
 
     }
 
-    @GetMapping("/test")
-    public RespBean test() throws Exception {
-
-        List<String[]> strings = HadoopUtil.getLineFile("/usr/output/part-r-00000");
-        ArrayList<Position> positions = new ArrayList<>();
-        for (String[] e :
-                strings) {
-            positions.add(new Position(e[0], Integer.valueOf(e[1])));
-        }
-        return RespBean.ok("文件内容",positions);
-    }
 
 
 }

@@ -83,16 +83,16 @@ public class HadoopUtil {
         String line ;
         String[] lineSpilt;
         ArrayList<String[]> strings = new ArrayList<>();
-        while ((line = br.readLine())!=null ){
+        for(int i = 0;i<100&&(line = br.readLine())!=null;i++){
             lineSpilt = line.split("\t");
-            strings.add(lineSpilt);
+            strings.add(lineSpilt[1].split("_"));
         }
         return strings;
     }
     public static boolean DeleteFile(String path) throws Exception {
         FileSystem fs = getFileSystem();
         if(fs.exists(new Path(path))){
-            if (fs.delete(new Path(path),false)){
+            if (fs.delete(new Path(path),true)){
                 return true;
             }
             return false;
