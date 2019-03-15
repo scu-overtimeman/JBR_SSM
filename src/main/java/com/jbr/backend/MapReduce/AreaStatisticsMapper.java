@@ -30,7 +30,7 @@ public class AreaStatisticsMapper extends Mapper<LongWritable, Text, Text, IntWr
         //        String career = jsonObj.getJSONObject(keys.next()).getString("职位类型");
                 JSONObject information=jsonObj.getJSONObject(keys.next());
                 int salary=information.getInt("薪资上限");
-                String data = information.getString("地域")+"("+information.getString("职位类型")+")";
+                String data = information.getString("地域")+"_"+information.getString("职位类型");
                 if(salary>0){        //剔除薪资“面议”的职位
                     k.set(data);
                     context.write(k,new IntWritable(salary));

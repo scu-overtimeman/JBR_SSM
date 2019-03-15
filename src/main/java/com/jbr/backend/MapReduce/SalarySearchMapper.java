@@ -34,11 +34,11 @@ public class SalarySearchMapper extends Mapper<LongWritable, Text, IntWritable, 
                 JSONObject information=jsonObj.getJSONObject(name);
                 if(information.getInt("薪资上限")<=salaryT && information.getInt("薪资下限")>=salaryB){
                     context.write(new IntWritable(information.getInt("薪资上限")),
-                                  new Text(name+"-"+
-                                                  information.getString("单位")+"-"+
-                                                  information.getInt("薪资上限")+"-"+
-                                                  information.getInt("薪资下限")+"-"+
-                                                  information.getString("学历要求")+"-"+
+                                  new Text(name+"_"+
+                                                  information.getString("单位")+"_"+
+                                                  information.getInt("薪资上限")+"_"+
+                                                  information.getInt("薪资下限")+"_"+
+                                                  information.getString("学历要求")+"_"+
                                                   information.getString("地域")));
                 }
 

@@ -30,7 +30,6 @@ public class EducationStatisticsMapper extends Mapper<LongWritable, Text, Text, 
             JSONObject jsonObj = new JSONObject(value.toString());
             Iterator<String> keys = jsonObj.keys();
             while (keys.hasNext()){
-        //        String career = jsonObj.getJSONObject(keys.next()).getString("职位类型");
                 JSONObject information=jsonObj.getJSONObject(keys.next());
                 if(information.getString("职位类型").contains(careerNeed)){
                     k.set(information.getString("学历要求"));
