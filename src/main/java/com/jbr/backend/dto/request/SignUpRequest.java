@@ -2,7 +2,6 @@ package com.jbr.backend.dto.request;
 
 public class SignUpRequest {
     private String userName;
-    private String email;
     private String password;
 
     public String getUserName() {
@@ -13,13 +12,6 @@ public class SignUpRequest {
         this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getPassword() {
         return password;

@@ -11,7 +11,6 @@ import javax.persistence.Table;
 public class Role {
     @Id
     @Column(name = "`id`")
-    @JsonIgnore
     @GeneratedValue(generator = "JDBC")
     private Integer id;
 

@@ -6,17 +6,14 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
-public class EducationStatisticsReduce extends Reducer<Text, IntWritable, Text, IntWritable>{
-    /**
-     *
-     */
+public class EducationStatisticsReduce extends Reducer<Text, IntWritable, Text, IntWritable> {
     @Override
-    protected void reduce(Text key , Iterable<IntWritable> ite ,Context context )
+    protected void reduce(Text key, Iterable<IntWritable> ite, Context context)
             throws IOException, InterruptedException {
         int sum = 0;
-        for (IntWritable i : ite ){
-            sum += i .get();
+        for (IntWritable i : ite) {
+            sum += i.get();
         }
-        context .write( key , new IntWritable( sum ));
+        context.write(key, new IntWritable(sum));
     }
 }

@@ -3,16 +3,16 @@ package com.jbr.backend.dto.request;
 import java.util.List;
 
 public class ModifyUserRolesRequest {
-    private Integer userId;
+    private String username;
 
     private List<Integer> roleIds;
 
-    public Integer getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<Integer> getRoleIds() {

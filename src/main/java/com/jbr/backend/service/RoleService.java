@@ -31,20 +31,18 @@ public class RoleService {
 
     @Secured("ROLE_ADMIN")
     public void setUserRoles(Integer userId,List<Integer> roleIds){
-        try {
+
             deleteUserAllRoles(userId);
             for (Integer roleId : roleIds) {
                 userRoleDao.insert(new UserRole(userId, roleId));
             }
-        }catch (Exception e){
-            System.out.println("setUserRoles 好像出了点问题");
-            throw e;
-        }
     }
     @Secured("ROLE_ADMIN")
     private void deleteUserAllRoles(int userId){
         try {
-            userRoleDao.deleteByExample(new Example(Role.class).createCriteria().andEqualTo("user_id", userId));
+            Example example = new Example(UserRole.class);
+            example.createCriteria().andEqualTo("userId", userId);
+            userRoleDao.deleteByExample(example);
         }catch (Exception e){
             e.printStackTrace();
             throw e;

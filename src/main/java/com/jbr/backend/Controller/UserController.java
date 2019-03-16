@@ -48,12 +48,13 @@ public class UserController {
     @Secured("ROLE_ADMIN")
     public @ResponseBody RespBean modifyUserRoles(@RequestBody ModifyUserRolesRequest request){
         try{
-            roleService.setUserRoles(request.getUserId(),request.getRoleIds());
+            roleService.setUserRoles(userService.SelectUserByName(request.getUsername()).getId(),request.getRoleIds());
             return RespBean.ok("修改用户权限成功");
         }catch (Exception e){
             return RespBean.error("修改用户权限失败");
         }
     }
+
     @Secured("ROLE_ADMIN")
     @GetMapping("/allUsers")
     public @ResponseBody RespBean getAllUsers(){

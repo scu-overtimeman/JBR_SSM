@@ -40,7 +40,7 @@
         <!--<table tableName="user" >-->
             <!--<generatedKey column="id" sqlStatement="JDBC"/>-->
         <!--</table>-->
-        <table tableName="user_role" >
+        <table tableName="data_source" >
             <generatedKey column="id" sqlStatement="JDBC"/>
         </table>
     </context>

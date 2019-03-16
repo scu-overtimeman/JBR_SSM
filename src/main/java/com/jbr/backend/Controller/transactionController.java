@@ -10,7 +10,7 @@ import com.jbr.backend.service.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("transaction/")
+@RequestMapping("/transaction")
 @RestController
 public class transactionController {
     final SearchService searchService;
@@ -21,7 +21,7 @@ public class transactionController {
         this.statisticsService = statisticsService;
     }
 
-    @PostMapping("searchBox")
+    @PostMapping("/searchBox")
     public @ResponseBody
     RespBean search(@RequestBody SearchBoxRequest searchBoxRequest) {
         try{
@@ -32,7 +32,7 @@ public class transactionController {
 
     }
 
-    @PostMapping("searchRegion")
+    @PostMapping("/searchRegion")
     public @ResponseBody
     RespBean search(@RequestBody SearchRegionRequest searchRegionRequest) {
         try {
@@ -42,7 +42,7 @@ public class transactionController {
         }
     }
 
-    @PostMapping("searchSalaryRange")
+    @PostMapping("/searchSalaryRange")
     public @ResponseBody
     RespBean search(@RequestBody SearchSalaryRangeRequest searchSalaryRangeRequest) {
         try {
@@ -51,7 +51,7 @@ public class transactionController {
             return RespBean.error("检索失败");
         }
     }
-    @PostMapping("AreaStatistics")
+    @PostMapping("/AreaStatistics")
     public @ResponseBody
     RespBean areaStatistics(){
         try{
@@ -61,7 +61,7 @@ public class transactionController {
 
         }
     }
-    @PostMapping("AreaStatistics")
+    @PostMapping("/careerStatistics")
     public @ResponseBody
     RespBean careerStatistics(){
         try{
@@ -70,7 +70,7 @@ public class transactionController {
             return RespBean.error("统计失败");
         }
     }
-    @PostMapping("EducationStatistics")
+    @PostMapping("/EducationStatistics")
     public @ResponseBody
     RespBean educationStatistics(@RequestBody EducationStatisticsRequest request){
         try {
@@ -79,7 +79,7 @@ public class transactionController {
             return RespBean.error("统计失败");
         }
     }
-    @PostMapping("SalaryStatistics")
+    @PostMapping("/SalaryStatistics")
     public @ResponseBody
     RespBean salaryStatistics(){
         try {

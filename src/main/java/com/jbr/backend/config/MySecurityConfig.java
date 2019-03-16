@@ -27,6 +27,7 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +37,6 @@ import java.io.PrintWriter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-
 
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -48,7 +48,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/index.html", "/static/**", "/login", "/favicon.ico");
     }
 
+
+
     @Override
+//    @CrossOrigin(origins = {"http://localhost:8081", "null"})
     protected void configure(HttpSecurity http) throws Exception {
         //super.configure(auth);
         //定制请求的授权规则
