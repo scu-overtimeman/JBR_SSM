@@ -25,8 +25,13 @@ public class DataSourceController {
         List<DataSource> dataSource = dataSourceService.getAllDataSource();
         return RespBean.ok("所有数据源",dataSource);
     }
-//    @PostMapping("/updateDataSource")
-//    public RespBean updateDataSource(@RequestBody List<DataSource> dataSources){
-//
-//    }
+    @PostMapping("/updateDataSource")
+    public RespBean updateDataSource(@RequestBody List<DataSource> dataSources){
+        dataSourceService.deleteAllDataSource();
+        for (DataSource e :
+                dataSources) {
+            dataSourceService.insertDataSource(e);
+        }
+        return RespBean.ok("更新完成！");
+    }
 }

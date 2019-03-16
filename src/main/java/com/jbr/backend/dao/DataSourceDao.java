@@ -1,6 +1,7 @@
 package com.jbr.backend.dao;
 
 import com.jbr.backend.entity.DataSource;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Mapper
 public interface DataSourceDao extends tk.mybatis.mapper.common.Mapper<DataSource> {
+
+    @Delete("delete * from data_source")
+    boolean deleteAllDataSourece();
 
 }
 

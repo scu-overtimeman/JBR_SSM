@@ -18,7 +18,13 @@ public class DataSourceService {
         return dataSources;
     }
     public void deleteAllDataSource(){
-
+        dataSourceDao.deleteAllDataSourece();
+    }
+    public boolean insertDataSource(DataSource dataSource){
+        if(dataSourceDao.insert(dataSource)!=0){
+            return true;
+        }
+        return false;
 
     }
 }
