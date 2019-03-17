@@ -3,6 +3,7 @@ package com.jbr.backend;
 import com.jbr.backend.dao.DataSourceDao;
 import com.jbr.backend.dao.UserDao;
 
+import com.jbr.backend.entity.DataSource;
 import com.jbr.backend.entity.Position;
 import com.jbr.backend.service.HadoopService;
 import com.jbr.backend.service.SearchService;
@@ -21,12 +22,16 @@ import java.util.List;
 public class Springboot05SecurityApplicationTests {
 
     @Autowired
-    HadoopService hadoopService;
+    DataSourceDao dataSourceDao;
     @Test
     public void contextLoads() throws Exception {
 
 //        hadoopService.educationStatistics("教师");
 //        hadoopService.salaryStatistics();
-
+        List<DataSource> dataSources = dataSourceDao.selectAll();
+        for (DataSource e :
+                dataSources) {
+            System.out.println(e);
+        }
     }
 }
