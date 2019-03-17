@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Mapper
 public interface DataSourceDao extends tk.mybatis.mapper.common.Mapper<DataSource> {
 
-    @Delete("delete * from data_source")
+    @Delete("DELETE FROM data_source")
     boolean deleteAllDataSourece();
 
 }

@@ -51,7 +51,7 @@ public class transactionController {
             return RespBean.error("检索失败");
         }
     }
-    @PostMapping("/AreaStatistics")
+    @GetMapping("/AreaStatistics")
     public @ResponseBody
     RespBean areaStatistics(){
         try{
@@ -61,7 +61,7 @@ public class transactionController {
 
         }
     }
-    @PostMapping("/careerStatistics")
+    @GetMapping("/careerStatistics")
     public @ResponseBody
     RespBean careerStatistics(){
         try{
@@ -70,16 +70,16 @@ public class transactionController {
             return RespBean.error("统计失败");
         }
     }
-    @PostMapping("/EducationStatistics")
+    @GetMapping("/EducationStatistics")
     public @ResponseBody
-    RespBean educationStatistics(@RequestBody EducationStatisticsRequest request){
+    RespBean educationStatistics(){
         try {
-            return RespBean.ok("统计成功",statisticsService.educationStatistics(request.getCareer()));
+            return RespBean.ok("统计成功",statisticsService.educationStatistics());
         } catch (Exception e) {
             return RespBean.error("统计失败");
         }
     }
-    @PostMapping("/SalaryStatistics")
+    @GetMapping("/SalaryStatistics")
     public @ResponseBody
     RespBean salaryStatistics(){
         try {

@@ -20,7 +20,7 @@ import java.util.Date;
 public class MyDynamicTask implements SchedulingConfigurer {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
-    private static final String DEFAULT_CRON = "0/5 * * * * ?";
+    private static final String DEFAULT_CRON = "0/30 * * * * ?";
     private String cron = DEFAULT_CRON;
 
     @Override
@@ -29,7 +29,7 @@ public class MyDynamicTask implements SchedulingConfigurer {
             @Override
             public void run() {
                 // 定时任务的业务逻辑
-                System.out.println("动态修改定时任务cron参数，当前时间：" + dateFormat.format(new Date()));
+                System.out.println("动态Crawler，当前时间：" + dateFormat.format(new Date()));
             }
         }, new Trigger() {
             @Override

@@ -21,15 +21,16 @@ public class EducationStatisticsMapper extends Mapper<LongWritable, Text, Text, 
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         Configuration config = context.getConfiguration();
         try {
-            String careerNeed = config.get("career");    //获取传入的参数
+
+//            String careerNeed = config.get("career");    //获取传入的参数
             JSONObject jsonObj = new JSONObject(value.toString());
             Iterator<String> keys = jsonObj.keys();
             while (keys.hasNext()) {
                 JSONObject information = jsonObj.getJSONObject(keys.next());
-                if (information.getString("职位类型").contains(careerNeed)) {
-                    k.set(information.getString("学历要求"));
-                    context.write(k, v);
-                }
+//                if (information.getString("职位类型").contains(careerNeed)) {
+                k.set(information.getString("学历要求"));
+                context.write(k, v);
+//                }
             }
         } catch (JSONException e) {
             e.printStackTrace();

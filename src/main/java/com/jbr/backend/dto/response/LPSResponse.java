@@ -2,13 +2,12 @@ package com.jbr.backend.dto.response;
 
 public class LPSResponse {
     private String location;
-    private String position;
-    private String salary;
 
-    public LPSResponse(String location, String position, String salary) {
+    private String count;
+
+    public LPSResponse(String location, String count) {
         this.location = location;
-        this.position = position;
-        this.salary = salary;
+        this.count = count;
     }
 
     public String getLocation() {
@@ -19,19 +18,19 @@ public class LPSResponse {
         this.location = location;
     }
 
-    public String getPosition() {
-        return position;
+    public String getCount() {
+        return count;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setCount(String count) {
+        this.count = count;
     }
 
-    public String getSalary() {
-        return salary;
-    }
-
-    public void setSalary(String salary) {
-        this.salary = salary;
+    @Override
+    public String toString() {
+        return "LPSResponse{" +
+                "location='" + location + '\'' +
+                ", count='" + count + '\'' +
+                '}';
     }
 }

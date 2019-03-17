@@ -19,6 +19,7 @@ import java.util.List;
 
 /**
  * 类或方法的功能描述 :Hadoop工具类
+ *
  * @date: 2018-11-28 13:59
  */
 @Component
@@ -33,6 +34,7 @@ public class HadoopUtil {
 
     /**
      * 获取HDFS配置信息
+     *
      * @return
      */
     private static Configuration getConfiguration() {
@@ -45,6 +47,7 @@ public class HadoopUtil {
 
     /**
      * 获取HDFS文件系统对象
+     *
      * @return
      * @throws Exception
      */
@@ -57,11 +60,11 @@ public class HadoopUtil {
     }
 
 
-
     @PostConstruct
     public void getPath() {
         hdfsPath = this.path;
     }
+
     @PostConstruct
     public void getName() {
         hdfsName = this.username;
@@ -79,23 +82,24 @@ public class HadoopUtil {
     public static List<String> getLineFile(String path) throws Exception {
         FileSystem fs = getFileSystem();
         FSDataInputStream fsDataInputStream = fs.open(new Path(path));
-        BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream,"utf-8"));
-        String line ;
+        BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream, "utf-8"));
+        String line;
         String[] lineSpilt;
         ArrayList<String> strings = new ArrayList<>();
-        for(int i = 0;i<100&&(line = br.readLine())!=null;i++){
+        for (int i = 0; i < 500 && (line = br.readLine()) != null; i++) {
             strings.add(line);
         }
         return strings;
     }
+
     public static boolean DeleteFile(String path) throws Exception {
         FileSystem fs = getFileSystem();
-        if(fs.exists(new Path(path))){
-            if (fs.delete(new Path(path),true)){
+        if (fs.exists(new Path(path))) {
+            if (fs.delete(new Path(path), true)) {
                 return true;
             }
             return false;
-        }else {
+        } else {
             return false;
         }
     }

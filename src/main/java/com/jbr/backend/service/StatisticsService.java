@@ -22,8 +22,8 @@ public class StatisticsService {
         List<LPSResponse> results = new ArrayList<>();
         for(String line : list){
             String[] keyValue = line.split("\t");
-            String[] keySpilt = keyValue[0].split("_");
-            results.add(new LPSResponse(keySpilt[0],keySpilt[1],keyValue[1]));
+//            String[] keySpilt = keyValue[0].split("_");
+            results.add(new LPSResponse(keyValue[0],keyValue[1]));
         }
         return results;
     }
@@ -39,8 +39,8 @@ public class StatisticsService {
         return results;
     }
 
-    public List<EducationStatisticsResponce> educationStatistics(String career) throws Exception {
-        hadoopService.educationStatistics(career);
+    public List<EducationStatisticsResponce> educationStatistics() throws Exception {
+        hadoopService.educationStatistics();
         List<String> list = HadoopUtil.getLineFile("/usr/EducationStatisticsOutput/part-r-00000");
         List<EducationStatisticsResponce> results = new ArrayList<>();
         for(String line : list){

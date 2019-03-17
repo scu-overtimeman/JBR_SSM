@@ -13,10 +13,10 @@ public class AreaSearchReduce extends Reducer<Text, IntWritable, Text, IntWritab
     @Override
     protected void reduce(Text key, Iterable<IntWritable> ite, Context context)
             throws IOException, InterruptedException {
-        int maxSalary = 0;   //最大薪资
+        int sum = 0;   //个数
         for (IntWritable i : ite) {
-            maxSalary = max(maxSalary, i.get());    //获取最大薪资
+            sum += i.get();
         }
-        context.write(key, new IntWritable(maxSalary));
+        context.write(key, new IntWritable(sum));
     }
 }

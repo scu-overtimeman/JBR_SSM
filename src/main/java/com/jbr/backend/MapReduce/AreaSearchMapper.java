@@ -25,9 +25,9 @@ public class AreaSearchMapper extends Mapper<LongWritable, Text, Text, IntWritab
             while (keys.hasNext()) {
                 JSONObject information = jsonObj.getJSONObject(keys.next());
                 if (information.getString("地域").equals(area)) {
-                    String data = information.getString("地域") + "_" + information.getString("职位类型");
+                    String data = information.getString("职位类型");
                     k.set(data);
-                    context.write(k, new IntWritable(information.getInt("薪资上限")));
+                    context.write(k, new IntWritable(1));
                 }
             }
         } catch (JSONException e) {

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -26,15 +28,22 @@ public class SearchService {
         return results;
     }
 
-    public List<LPSResponse> areaSearch(String position) throws Exception {
-        hadoopService.areaSearch(position);
+    public List<LPSResponse> areaSearch(String area) throws Exception {
+        hadoopService.areaSearch(area);
         List<String> list = HadoopUtil.getLineFile("/usr/AreaSearchOutput/part-r-00000");
         List<LPSResponse> results = new ArrayList<>();
         for(String line : list){
             String[] keyValue = line.split("\t");
-            String[] keySpilt = keyValue[0].split("_");
-            results.add(new LPSResponse(keySpilt[0],keySpilt[1],keyValue[1]));
+//            String[] keySpilt = keyValue[0].split("_");
+            results.add(new LPSResponse(keyValue[0],keyValue[1]));
         }
+
+        results.sort(new Comparator<LPSResponse>() {
+            @Override
+            public int compare(LPSResponse o1, LPSResponse o2) {
+                return -Integer.valueOf(o1.getCount()).compareTo(Integer.valueOf(o2.getCount()));
+            }
+        });
         return results;
     }
 

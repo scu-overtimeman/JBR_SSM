@@ -96,7 +96,7 @@ public class HadoopService {
         job.setReducerClass(AreaSearchReduce.class);
 
         //设置输出类型
-        job.setSortComparatorClass(DescSort.class);
+//        job.setSortComparatorClass(DescSort.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
@@ -134,10 +134,10 @@ public class HadoopService {
         return false;
     }
 
-    public boolean educationStatistics(String career) throws Exception {
+    public boolean educationStatistics() throws Exception {
 
 
-        configuration.set("career", career);
+//        configuration.set("career", career);
 
 
         Job job = Job.getInstance(configuration, "EducationStatistics");
