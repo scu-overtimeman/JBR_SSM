@@ -219,7 +219,7 @@ cityList={
       }
     }
 
-careerTotal={
+career={
         '餐饮': 'zplvyoujiudian', '家政保洁/安保': 'jiazhengbaojiexin', '美容/美发': 'meirongjianshen',
         '旅游': 'zpjiudian', '娱乐/休闲': 'zpwentiyingshi', '保健按摩': 'zpanmo',
         '运动健身': 'zpjianshen', '人事/行政/后勤': 'renli', '司机': 'siji',
@@ -237,7 +237,3 @@ careerTotal={
         '农/林/牧/渔业': 'nonglinmuyu', '其他招聘信息': 'zhaopin', '招聘会': 'zhaopinhui'
 }
 
-career={'职业培训': 'zpzhiyepeixun', '财务/审计/统计': 'zpcaiwushenji', '金融/银行/证券/投资': 'jinrongtouzi',
-        '保险': 'zpjinrongbaoxian', '医院/医疗/护理': 'zpyiyuanyiliao', '制药/生物工程': 'zpzhiyao',
-        '环保': 'huanbao', '建筑': 'zpfangchanjianzhu', '物业管理': 'zpwuye',
-        '农/林/牧/渔业': 'nonglinmuyu', '其他招聘信息': 'zhaopin', '招聘会': 'zhaopinhui'}

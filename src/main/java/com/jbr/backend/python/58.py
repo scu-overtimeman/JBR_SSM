@@ -2,24 +2,27 @@
 import os
 import sys
 import re
+import threading
 import urllib
 from time import sleep
+
+import requests
 from bs4 import BeautifulSoup as bb
 from threading import Thread
 from FEcity import cityList
 from FEcity import career
+from format import dataFormat
 import json
 import random
 def getHref(cityList):
-    global sum
+    global sum,fw,proxy_list
     sum = 0
     header = [{
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/68.0.3440.84 Safari/537.36'
     },
     {'User-Agent':'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:65.0) Gecko/20100101 Firefox/65.0'}]
-    global fw
-    fw = open('../fe_34.json', 'w', encoding='utf-8')
+    fw = open('../fe.json', 'w', encoding='utf-8')
     for provinceItem in cityList.keys():
         for cityItem in cityList[provinceItem].keys():
             cityCode = cityList[provinceItem][cityItem]  # 城市对应的编码
@@ -29,13 +32,18 @@ def getHref(cityList):
                #     b = bb(urllib.request.urlopen(href).read(), 'lxml')
                #     total_page = int(b.find('span', {'class': 'num_operate'}).find('i', {'class': 'total_page'}).text)  # 获取每个城市的总页数
                     for i in range(1):
-                        href = urllib.request.Request(("https://%s.58.com/%s/pn%s") % (cityCode, career[careerItem], i),headers=header[random.randint(0,1)])
-                        b = bb(urllib.request.urlopen(href).read(), 'lxml')
+                        href = requests.get(("https://%s.58.com/%s/pn%s") % (cityCode, career[careerItem], i),
+                                             headers=header[random.randint(0,1)])
+                        b = bb(href.text, 'lxml')
                         items = b.findAll('li', {'class', 'job_item clearfix'})
                         for item in items:
-                            href = urllib.request.Request(item.find('div',{'class':'job_name clearfix'}).find('a')['href'], headers=header[random.randint(0,1)])
+                        #    href = urllib.request.Request(item.find('div',{'class':'job_name clearfix'}).find('a')['href'], headers=header[random.randint(0,1)])
+                            href = requests.get(item.find('div',{'class':'job_name clearfix'}).find('a')['href'],
+                                                headers=header[random.randint(0, 1)])
+                         #   Thread(target=getInformation, args=(
+                         #       bb(urllib.request.urlopen(href).read(), 'lxml'),provinceItem,cityItem,sum)).start()
                             Thread(target=getInformation, args=(
-                                bb(urllib.request.urlopen(href).read(), 'lxml'),provinceItem,cityItem,sum)).start()
+                                   bb(href.text, 'lxml'),provinceItem,cityItem,sum)).start()
                             sum += 1
                         sleep(2)    #每获取一页数据就休眠2秒
                 except Exception as e:
@@ -75,6 +83,7 @@ def getInformation(item,provinceItem,cityItem,sum):
     except Exception as e:
         print("2:%s" % e)
         fw.close()   #关闭文件
+        dataFormat("../fe.json")
         os._exit(0)  #结束整个程序
 
 
